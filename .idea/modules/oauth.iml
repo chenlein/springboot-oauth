@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="oauth" external.linked.project.path="$MODULE_DIR$/../../oauth" external.root.project.path="$MODULE_DIR$/../../oauth" external.system.id="GRADLE" external.system.module.group="com.chenlei" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../oauth">
+      <excludeFolder url="file://$MODULE_DIR$/../../oauth/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../oauth/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../oauth/out" />
+    </content>
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
