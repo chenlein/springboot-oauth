@@ -24,9 +24,9 @@ public class ResourceController {
 
     @RequestMapping("/")
     public String getResource() {
-        logger.debug("I am client-3 and I will call client-2...");
-        String result = oAuth2RestTemplate.getForObject("http://localhost:8082/client-2/resource/", String.class);
-        logger.debug("The client-2 say: " + result);
+        logger.debug("I am client-3 and I will call client-4...");
+        String result = oAuth2RestTemplate.getForObject("http://localhost:8084/client-4/resource/", String.class);
+        logger.debug("The client-4 say: " + result);
         return "I am client-3!!!";
     }
 

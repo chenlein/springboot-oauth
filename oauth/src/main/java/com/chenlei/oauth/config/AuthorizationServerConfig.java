@@ -72,6 +72,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("client-3")
                 .secret(this.passwordEncoder.encode("client"))
                 .authorizedGrantTypes("client_credentials")
+                .scopes("rea.*")
+                .and()
+                .withClient("client-4")
+                .secret(this.passwordEncoder.encode("client"))
+                .authorizedGrantTypes("client_credentials")
                 .scopes("read");
     }
 
