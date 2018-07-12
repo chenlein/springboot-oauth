@@ -31,17 +31,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().authenticated()  // 所有请求都需要授权
-                .and().formLogin();  // 使用默认的登陆界面
+                .and().formLogin()  // 使用默认的登陆界面
+                .and().anonymous().disable();
     }
 
-    /**
-     * 申明authenticationManagerBean，否则在5.x版本中无法自动注入
-     * @return
-     * @throws Exception
-     */
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+//    /**
+//     * 申明authenticationManagerBean，否则在5.x版本中无法自动注入
+//     * @return
+//     * @throws Exception
+//     */
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 }

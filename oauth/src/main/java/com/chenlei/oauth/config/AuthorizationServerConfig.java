@@ -32,18 +32,18 @@ import java.util.Map;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private TokenStore tokenStore;
+//    @Autowired
+//    private TokenStore tokenStore;
+//
+//    @Autowired
+//    private UserApprovalHandler userApprovalHandler;
 
-    @Autowired
-    private UserApprovalHandler userApprovalHandler;
-
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private ClientDetailsService clientDetailsService;
+//    @Autowired
+//    @Qualifier("authenticationManagerBean")
+//    private AuthenticationManager authenticationManager;
+//
+//    @Autowired
+//    private ClientDetailsService clientDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -67,13 +67,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizedGrantTypes("authorization_code")
                 .scopes("read")
                 .redirectUris("http://localhost:8082")
-                .autoApprove(true);
+                .autoApprove(true)
+                .and()
+                .withClient("client-3")
+                .secret(this.passwordEncoder.encode("client"))
+                .authorizedGrantTypes("client_credentials")
+                .scopes("read");
     }
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(this.tokenStore).userApprovalHandler(this.userApprovalHandler).authenticationManager(this.authenticationManager);
-    }
+//    @Override
+//    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+//        endpoints.tokenStore(this.tokenStore).userApprovalHandler(this.userApprovalHandler).authenticationManager(this.authenticationManager);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -82,20 +87,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new DelegatingPasswordEncoder("bcrypt", map);
     }
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
-
-    @Bean
-    @Lazy
-    @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public UserApprovalHandler userApprovalHandler() {
-        TokenStoreUserApprovalHandler tokenStoreUserApprovalHandler = new TokenStoreUserApprovalHandler();
-        tokenStoreUserApprovalHandler.setTokenStore(this.tokenStore);
-        tokenStoreUserApprovalHandler.setClientDetailsService(this.clientDetailsService);
-        tokenStoreUserApprovalHandler.setRequestFactory(new DefaultOAuth2RequestFactory(this.clientDetailsService));
-        return tokenStoreUserApprovalHandler;
-    }
+//    @Bean
+//    public TokenStore tokenStore() {
+//        return new InMemoryTokenStore();
+//    }
+//
+//    @Bean
+//    @Lazy
+//    @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+//    public UserApprovalHandler userApprovalHandler() {
+//        TokenStoreUserApprovalHandler tokenStoreUserApprovalHandler = new TokenStoreUserApprovalHandler();
+//        tokenStoreUserApprovalHandler.setTokenStore(this.tokenStore);
+//        tokenStoreUserApprovalHandler.setClientDetailsService(this.clientDetailsService);
+//        tokenStoreUserApprovalHandler.setRequestFactory(new DefaultOAuth2RequestFactory(this.clientDetailsService));
+//        return tokenStoreUserApprovalHandler;
+//    }
 
 }

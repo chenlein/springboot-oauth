@@ -1,0 +1,23 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /client-3
+security:
+  oauth2:
+    client:
+      client-id: client-3
+      client-secret: client
+      access-token-uri: http://localhost:8080/server/oauth/token
+      user-authorization-uri: http://localhost:8080/server/oauth/authorize
+      grant-type: client_credentials
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    com.chenlei: DEBUG
+#oauth2client:
+#    client-id: client-3
+#    client-secret: client
+#    access-token-uri: http://localhost:8080/server/oauth/token
+#    user-authorization-uri: http://localhost:8080/server/oauth/authorize
+#    grant-type: client_credentials

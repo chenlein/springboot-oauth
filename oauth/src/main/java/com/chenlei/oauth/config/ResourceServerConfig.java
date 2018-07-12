@@ -18,6 +18,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.requestMatchers().antMatchers("/oauth/me")
-                .and().authorizeRequests().anyRequest().access("#oauth2.hasScope('read')");
+                .and().authorizeRequests().anyRequest().access("#oauth2.hasScope('read')")
+                .and().anonymous().disable();
     }
+
 }

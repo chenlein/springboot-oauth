@@ -6,6 +6,8 @@
       <module name="client-1_test" target="1.8" />
       <module name="client-2_main" target="1.8" />
       <module name="client-2_test" target="1.8" />
+      <module name="client-3_main" target="1.8" />
+      <module name="client-3_test" target="1.8" />
       <module name="oauth_main" target="1.8" />
       <module name="oauth_test" target="1.8" />
     </bytecodeTargetLevel>
