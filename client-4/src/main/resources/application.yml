@@ -11,7 +11,6 @@ security:
       user-authorization-uri: http://localhost:8080/server/oauth/authorize
     resource:
       user-info-uri: http://localhost:8080/server/oauth/me
-      prefer-token-info: true
     authorization:
       check-token-access: http://localhost:8080/server/oauth/check_token
 logging:

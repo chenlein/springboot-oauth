@@ -6,4 +6,6 @@ logging:
   level:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
-#    org.springframework.boot.autoconfigure: DEBUG
+    org.springframework.boot.autoconfigure: DEBUG
+keystore:
+  password: awesomePass

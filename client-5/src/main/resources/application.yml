@@ -1,16 +1,17 @@
 server:
-  port: 8082
+  port: 8085
   servlet:
-    context-path: /client-2
+    context-path: /client-5
 security:
   oauth2:
     client:
-      client-id: client-2
+      client-id: client-5
       client-secret: client
       access-token-uri: http://localhost:8080/server/oauth/token
       user-authorization-uri: http://localhost:8080/server/oauth/authorize
     resource:
-      user-info-uri: http://localhost:8080/server/oauth/me
+      jwt:
+        key-uri: http://localhost:8080/server/oauth/token_key
     authorization:
       check-token-access: http://localhost:8080/server/oauth/check_token
 logging:

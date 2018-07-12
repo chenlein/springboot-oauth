@@ -3,6 +3,8 @@ package com.chenlei.oauth.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -18,6 +20,9 @@ import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +37,9 @@ import java.util.Map;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+    @Autowired
+    private Environment environment;
+
 //    @Autowired
 //    private TokenStore tokenStore;
 //
@@ -42,15 +50,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //    @Qualifier("authenticationManagerBean")
 //    private AuthenticationManager authenticationManager;
 //
-//    @Autowired
-//    private ClientDetailsService clientDetailsService;
+    @Autowired
+    private ClientDetailsService clientDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("isAuthenticated()");
+        security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
     }
 
     @Override
@@ -77,13 +85,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("client-4")
                 .secret(this.passwordEncoder.encode("client"))
                 .authorizedGrantTypes("client_credentials")
+                .scopes("read")
+                .and()
+                .withClient("client-5")
+                .secret(this.passwordEncoder.encode("client"))
+                .authorizedGrantTypes("client_credentials")
                 .scopes("read");
     }
 
-//    @Override
-//    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        endpoints.tokenStore(this.tokenStore).userApprovalHandler(this.userApprovalHandler).authenticationManager(this.authenticationManager);
-//    }
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.tokenStore(this.tokenStore())
+                .tokenEnhancer(jwtTokenEnhancer())
+                .userApprovalHandler(this.userApprovalHandler());
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -92,20 +107,29 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new DelegatingPasswordEncoder("bcrypt", map);
     }
 
-//    @Bean
-//    public TokenStore tokenStore() {
-//        return new InMemoryTokenStore();
-//    }
-//
-//    @Bean
-//    @Lazy
-//    @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-//    public UserApprovalHandler userApprovalHandler() {
-//        TokenStoreUserApprovalHandler tokenStoreUserApprovalHandler = new TokenStoreUserApprovalHandler();
-//        tokenStoreUserApprovalHandler.setTokenStore(this.tokenStore);
-//        tokenStoreUserApprovalHandler.setClientDetailsService(this.clientDetailsService);
-//        tokenStoreUserApprovalHandler.setRequestFactory(new DefaultOAuth2RequestFactory(this.clientDetailsService));
-//        return tokenStoreUserApprovalHandler;
-//    }
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtTokenEnhancer());
+    }
+
+    @Bean
+    public JwtAccessTokenConverter jwtTokenEnhancer() {
+        String password = this.environment.getProperty("keystore.password");
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), password.toCharArray());
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+        return converter;
+    }
+
+    @Bean
+    @Lazy
+    @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public UserApprovalHandler userApprovalHandler() {
+        TokenStoreUserApprovalHandler tokenStoreUserApprovalHandler = new TokenStoreUserApprovalHandler();
+        tokenStoreUserApprovalHandler.setTokenStore(this.tokenStore());
+        tokenStoreUserApprovalHandler.setClientDetailsService(this.clientDetailsService);
+        tokenStoreUserApprovalHandler.setRequestFactory(new DefaultOAuth2RequestFactory(this.clientDetailsService));
+        return tokenStoreUserApprovalHandler;
+    }
 
 }

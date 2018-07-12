@@ -14,6 +14,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-4.iml" filepath="$PROJECT_DIR$/.idea/modules/client-4.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-4_main.iml" filepath="$PROJECT_DIR$/.idea/modules/client-4_main.iml" group="client-4" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-4_test.iml" filepath="$PROJECT_DIR$/.idea/modules/client-4_test.iml" group="client-4" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-5.iml" filepath="$PROJECT_DIR$/.idea/modules/client-5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-5_main.iml" filepath="$PROJECT_DIR$/.idea/modules/client-5_main.iml" group="client-5" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-5_test.iml" filepath="$PROJECT_DIR$/.idea/modules/client-5_test.iml" group="client-5" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth_main.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth_main.iml" group="oauth" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/oauth_test.iml" filepath="$PROJECT_DIR$/.idea/modules/oauth_test.iml" group="oauth" />
