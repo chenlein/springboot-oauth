@@ -24,10 +24,21 @@ public class ResourceController {
         return "I am client-4, now check web security!!!";
     }
 
-    @PreAuthorize("#oauth2.hasMatchingAnyScope('read')")
+    @PreAuthorize("#oauth2.hasMatchingScope('read')")
     @RequestMapping("/method")
     public String checkMethodSecurity() {
         return "I am client-4, now check method security!!!";
+    }
+
+    @RequestMapping("/cse/web")
+    public String checkCustomWebSecurity() {
+        return "I am client-4, now check custom web security!!!";
+    }
+
+    @PreAuthorize("@cse.permitAll(authentication, 'customSecurityExpression')")
+    @RequestMapping("/cse/method")
+    public String checkCustomMethodSecurity() {
+        return "I am client-4, now check custom method security!!!";
     }
 
 }

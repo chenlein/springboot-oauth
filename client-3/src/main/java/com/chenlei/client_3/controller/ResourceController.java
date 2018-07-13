@@ -28,6 +28,8 @@ public class ResourceController {
         logger.debug("The client-4 say: " + oAuth2RestTemplate.getForObject("http://localhost:8084/client-4/resource/", String.class));
         logger.debug("The client-4 say: " + oAuth2RestTemplate.getForObject("http://localhost:8084/client-4/resource/web", String.class));
         logger.debug("The client-4 say: " + oAuth2RestTemplate.getForObject("http://localhost:8084/client-4/resource/method", String.class));
+        logger.debug("The client-4 say: " + oAuth2RestTemplate.getForObject("http://localhost:8084/client-4/resource/cse/web", String.class));
+        logger.debug("The client-4 say: " + oAuth2RestTemplate.getForObject("http://localhost:8084/client-4/resource/cse/method", String.class));
         return "I am client-3!!!";
     }
 

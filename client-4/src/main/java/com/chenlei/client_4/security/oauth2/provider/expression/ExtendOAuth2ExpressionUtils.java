@@ -11,8 +11,13 @@ import org.springframework.security.oauth2.provider.OAuth2Request;
  */
 public abstract class ExtendOAuth2ExpressionUtils {
 
+    /**
+     * 使用Authentication中的scope表达式匹配scope字符串
+     * @param authentication
+     * @param scopes
+     * @return
+     */
     public static boolean hasMatchingAnyScope(Authentication authentication, String[] scopes) {
-
         if (authentication instanceof OAuth2Authentication) {
             OAuth2Request clientAuthentication = ((OAuth2Authentication) authentication).getOAuth2Request();
             for (String scopeRegex : clientAuthentication.getScope()) {
@@ -23,7 +28,6 @@ public abstract class ExtendOAuth2ExpressionUtils {
                 }
             }
         }
-
         return false;
     }
 
