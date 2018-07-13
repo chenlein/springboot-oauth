@@ -1,6 +1,6 @@
 package com.chenlei.client_4.config;
 
-import com.chenlei.client_4.security.oauth2.provider.expression.OAuth3WebSecurityExpressionHandler;
+import com.chenlei.client_4.security.oauth2.provider.expression.ExtendOAuth2WebSecurityExpressionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
@@ -49,12 +49,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         remoteTokenServices.setClientId(this.oAuth2ClientProperties.getClientId());
         remoteTokenServices.setClientSecret(this.oAuth2ClientProperties.getClientSecret());
 
-        resources.tokenServices(remoteTokenServices).expressionHandler(new OAuth3WebSecurityExpressionHandler());
+        resources.tokenServices(remoteTokenServices).expressionHandler(new ExtendOAuth2WebSecurityExpressionHandler());
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().access("#oauth3.hasScopeMatching('read')")
+        http.authorizeRequests().antMatchers("/resource/web/**").access("#oauth2.hasMatchingAnyScope('read')")
                 .and().anonymous().disable();
     }
 
